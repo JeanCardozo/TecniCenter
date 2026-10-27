@@ -1,0 +1,77 @@
+---
+import Icon from './Icon.astro';
+import { waDefault } from '../data/site';
+
+const brands = ['Samsung', 'LG', 'Sony', 'JVC', 'TCL', 'Hisense', 'Otra marca'];
+const faults = [
+  'No enciende',
+  'Enciende pero no hay imagen',
+  'Pantalla con líneas o manchas',
+  'Tiene imagen pero no hay sonido',
+  'No conecta al WiFi o a las aplicaciones',
+  'Otra falla',
+];
+---
+<form class="ticket" id="ticket" aria-labelledby="ticket-title">
+  <span class="stamp">Diagnóstico<br />garantizado</span>
+  <div class="ticket-head">
+    <strong id="ticket-title">Orden de servicio</strong>
+    <span class="label">Paso 1 de 1</span>
+  </div>
+
+  <fieldset>
+    <legend>Equipo</legend>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="kind" value="televisor" checked /><span>Televisor</span></label>
+      <label class="chip"><input type="radio" name="kind" value="equipo de sonido" /><span>Equipo de sonido</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Marca</legend>
+    <div class="chips">
+      {brands.map((b, i) => (
+        <label class="chip"><input type="radio" name="brand" value={b} checked={i === 0} /><span>{b}</span></label>
+      ))}
+    </div>
+  </fieldset>
+
+  <label class="field">
+    <span>¿Qué le pasa?</span>
+    <select name="fault">
+      {faults.map((f) => <option value={f}>{f}</option>)}
+    </select>
+  </label>
+
+  <label class="field">
+    <span>Su nombre (opcional)</span>
+    <input type="text" name="name" autocomplete="given-name" maxlength="40" />
+  </label>
+
+  <label class="check"><input type="checkbox" name="home" /> Necesito servicio a domicilio (tiene costo)</label>
+
+  <a class="btn btn-wa" id="ticket-send" href={waDefault} target="_blank" rel="noopener" data-track="whatsapp_ticket">
+    <Icon name="wa" /> Enviar por WhatsApp
+  </a>
+  <p class="fine">Se abre WhatsApp con el mensaje ya escrito. Puede adjuntar una foto o un video.</p>
+</form>
+
+<script>
+  const form = document.getElementById('ticket') as HTMLFormElement;
+  const send = document.getElementById('ticket-send') as HTMLAnchorElement;
+  const tel = '573166412601';
+
+  function build() {
+    const d = new FormData(form);
+    const name = String(d.get('name') ?? '').trim();
+    const brand = d.get('brand') === 'Otra marca' ? '' : ` ${d.get('brand')}`;
+    const fault = String(d.get('fault')).toLowerCase();
+    const home = d.get('home') ? ' Necesito servicio a domicilio.' : '';
+    const text = `Hola, buenas.${name ? ` Soy ${name}.` : ''} Necesito servicio técnico para mi ${d.get('kind')}${brand}: ${fault}.${home} ¿Me pueden ayudar con el diagnóstico?`;
+    send.href = `https://wa.me/${tel}?text=${encodeURIComponent(text)}`;
+  }
+
+  form.addEventListener('input', build);
+  form.addEventListener('submit', (e) => e.preventDefault());
+  build();
+</script>
