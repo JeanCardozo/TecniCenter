@@ -90,12 +90,6 @@ npm run deploy   # lee PUBLIC_GA_ID de Netlify, compila y publica en producción
 
 El despliegue se hace desde la línea de comandos del dueño del proyecto, así que un pull request de un tercero **no publica nada**.
 
-## Pendiente
-
-- Fotos e imágenes propias del taller (por ahora la web usa solo tipografía y gráficos propios).
-- Plazo de la garantía, correo y documento del responsable para la política de datos.
-- Revisión legal de los cuatro textos.
-- Archivos oficiales de los logos de JVC, Hisense, TCL y Philips (hoy se muestran en texto).
 
 ## Créditos
 
