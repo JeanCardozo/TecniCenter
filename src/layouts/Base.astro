@@ -1,0 +1,101 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/instrument-sans';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import CookieBanner from '../components/CookieBanner.astro';
+import Icon from '../components/Icon.astro';
+import { site, waDefault } from '../data/site';
+
+interface Props { title: string; description: string; noindex?: boolean; schema?: object[]; }
+const { title, description, noindex = false, schema = [] } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#f2eee4" />
+    {import.meta.env.PUBLIC_GSC_VERIFICATION && <meta name="google-site-verification" content={import.meta.env.PUBLIC_GSC_VERIFICATION} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label={`${site.name}, inicio`}>
+          <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#16181A"/><rect x="12" y="24" width="8" height="16" fill="#F2EEE4"/><rect x="24" y="24" width="8" height="16" fill="#F0A202"/><rect x="36" y="24" width="8" height="16" fill="#3FAE86"/><rect x="48" y="24" width="4" height="16" fill="#D8431F"/></svg>
+          {site.name}
+        </a>
+        <nav class="nav" aria-label="Principal">
+          <a href="/#opiniones">Opiniones</a>
+          <a href="/#servicios">Servicios</a>
+          <a href="/#ubicacion">Ubicación</a>
+          <a href="/#preguntas">Preguntas</a>
+        </nav>
+        <a class="btn btn-call" href={`tel:${site.tel}`} data-track="call_header"><Icon name="phone" /> {site.telDisplay}</a>
+      </div>
+    </header>
+
+    <main id="contenido"><slot /></main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div>
+          <h2>{site.name}</h2>
+          <p>Servicio técnico autorizado de televisores y equipos de sonido en {site.address.city}.</p>
+          <p style="margin-top:.6rem">{site.address.street}, {site.address.area}<br />{site.address.city}, {site.address.region}</p>
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <ul>
+            <li><a href={`tel:${site.tel}`} data-track="call_footer">{site.telDisplay}</a></li>
+            <li><a href={waDefault} target="_blank" rel="noopener" data-track="whatsapp_footer">WhatsApp</a></li>
+            {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+            <li>Lun–Vie 9:00–18:30 · Sáb 9:00–15:00</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Información legal</h2>
+          <ul>
+            <li><a href="/privacidad/">Tratamiento de datos personales</a></li>
+            <li><a href="/cookies/">Política de cookies</a></li>
+            <li><a href="/terminos/">Términos de uso</a></li>
+            <li><a href="/garantia/">Política de garantía</a></li>
+            <li><button type="button" class="linklike" data-cookie-settings>Configurar cookies</button></li>
+          </ul>
+        </div>
+        <div class="legal">
+          <p>© {year} {site.name} — {site.owner}. Todos los derechos reservados.</p>
+          <p>Samsung, LG, JVC, Bose, JBL, Sony y las demás marcas y logotipos mencionados son propiedad de sus respectivos titulares y se usan para identificar los equipos que se atienden.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="mobile-bar">
+      <a class="call" href={`tel:${site.tel}`} data-track="call_bar"><Icon name="phone" /> Llamar</a>
+      <a class="wa" href={waDefault} target="_blank" rel="noopener" data-track="whatsapp_bar"><Icon name="wa" /> WhatsApp</a>
+    </div>
+
+    <CookieBanner />
+  </body>
+</html>

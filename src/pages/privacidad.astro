@@ -1,0 +1,55 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+---
+<Legal title="Política de tratamiento de datos personales" description="Cómo Tecni Center recoge, usa y protege los datos personales, conforme a la Ley 1581 de 2012.">
+  <h2>1. Responsable del tratamiento</h2>
+  <p><strong>{site.owner}</strong>, propietario del establecimiento de comercio <strong>{site.name}</strong>.</p>
+  <ul>
+    <li>Domicilio: {site.address.street}, {site.address.area}, {site.address.city}, {site.address.region}, Colombia.</li>
+    <li>Teléfono y WhatsApp: {site.telDisplay}.</li>
+    {site.email && <li>Correo electrónico: {site.email}.</li>}
+  </ul>
+
+  <h2>2. Marco legal</h2>
+  <p>Esta política se adopta conforme a la Ley 1581 de 2012, el Decreto 1074 de 2015 (que compila el Decreto 1377 de 2013) y demás normas que las modifiquen o complementen.</p>
+
+  <h2>3. Datos que recogemos</h2>
+  <ul>
+    <li>Datos que usted nos da al escribirnos o llamarnos: nombre, número de teléfono, y la marca, el modelo y la falla del equipo.</li>
+    <li>Fotos o videos del equipo, si usted decide enviarlos.</li>
+    <li>Datos de navegación (páginas visitadas, clics en los botones de contacto), solo si usted acepta las cookies de medición. Vea la <a href="/cookies/">política de cookies</a>.</li>
+  </ul>
+  <p>Este sitio no tiene formularios de registro, no vende en línea y no recibe pagos. No solicitamos datos sensibles ni de menores de edad.</p>
+
+  <h2>4. Finalidades</h2>
+  <ul>
+    <li>Responder consultas y dar un diagnóstico o cotización.</li>
+    <li>Programar, ejecutar y hacer seguimiento al servicio técnico y a la garantía.</li>
+    <li>Atender solicitudes, quejas y reclamos.</li>
+    <li>Medir de forma agregada cómo se usa el sitio y mejorarlo (solo con su consentimiento).</li>
+  </ul>
+
+  <h2>5. Cómo funciona el botón de WhatsApp</h2>
+  <p>Al pulsar el botón se abre WhatsApp con un mensaje escrito. El mensaje no se envía hasta que usted lo envíe. Desde ese momento la conversación se rige también por las políticas de WhatsApp y Meta. El sitio no guarda el contenido del mensaje.</p>
+
+  <h2>6. Derechos del titular</h2>
+  <p>Usted puede:</p>
+  <ul>
+    <li>Conocer, actualizar y rectificar sus datos.</li>
+    <li>Solicitar prueba de la autorización otorgada.</li>
+    <li>Ser informado sobre el uso que se ha dado a sus datos.</li>
+    <li>Presentar quejas ante la Superintendencia de Industria y Comercio (SIC).</li>
+    <li>Revocar la autorización y solicitar la supresión de sus datos cuando no se respeten los principios y garantías legales.</li>
+    <li>Acceder de forma gratuita a sus datos personales.</li>
+  </ul>
+
+  <h2>7. Consultas y reclamos</h2>
+  <p>Puede ejercer estos derechos por WhatsApp o por teléfono al {site.telDisplay}{site.email && ` o al correo ${site.email}`}, o en nuestra dirección. Las consultas se responden en un máximo de diez (10) días hábiles y los reclamos en un máximo de quince (15) días hábiles, prorrogables en los términos de la ley.</p>
+
+  <h2>8. Conservación y seguridad</h2>
+  <p>Conservamos los datos mientras sean necesarios para las finalidades descritas y para atender garantías u obligaciones legales. Aplicamos medidas razonables para protegerlos contra acceso no autorizado, pérdida o uso indebido. No vendemos ni cedemos sus datos a terceros, salvo obligación legal.</p>
+
+  <h2>9. Cambios</h2>
+  <p>Podemos actualizar esta política. La versión vigente es la publicada en esta página, con su fecha de actualización.</p>
+</Legal>

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { waDefault } from '../data/site';
+---
+<Base title="Página no encontrada | Tecni Center" description="La página que busca no existe." noindex>
+  <section>
+    <div class="wrap">
+      <p class="label">Error 404</p>
+      <span class="bands" aria-hidden="true"></span>
+      <h1 style="font-size:var(--s3)">Esta página no existe.</h1>
+      <div class="cta-row">
+        <a class="btn btn-call" href="/">Ir al inicio</a>
+        <a class="btn btn-wa" href={waDefault} target="_blank" rel="noopener"><Icon name="wa" /> Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</Base>

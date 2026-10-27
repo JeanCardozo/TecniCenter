@@ -1,0 +1,35 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+---
+<Legal title="Términos de uso del sitio" description="Condiciones para usar el sitio web de Tecni Center.">
+  <h2>1. Quiénes somos</h2>
+  <p>Este sitio pertenece a <strong>{site.owner}</strong>, titular del establecimiento de comercio <strong>{site.name}</strong>, ubicado en {site.address.street}, {site.address.area}, {site.address.city}, {site.address.region}, Colombia.</p>
+
+  <h2>2. Qué es este sitio</h2>
+  <p>Es un sitio informativo para conocer nuestros servicios y contactarnos. No vendemos productos ni recibimos pagos en línea. Los servicios y las baterías se acuerdan y se pagan directamente con nosotros, en el taller o a domicilio.</p>
+
+  <h2>3. Información y precios</h2>
+  <p>El valor de un diagnóstico, una reparación o un servicio a domicilio depende del equipo y de la falla, y se informa al cliente antes de comenzar el trabajo. La información del sitio es de carácter general y puede cambiar sin previo aviso.</p>
+
+  <h2>4. Servicio técnico autorizado y marcas</h2>
+  <p>Tecni Center presta servicio técnico autorizado de las marcas indicadas en el sitio, conforme a la autorización concedida a {site.owner}. Las marcas y los logotipos mencionados pertenecen a sus titulares y se usan solo para identificar los equipos que atendemos; su uso no implica que dichos titulares patrocinen este sitio.</p>
+
+  <h2>5. Propiedad intelectual</h2>
+  <p>Los textos, el diseño y los demás elementos propios del sitio son de {site.name}. No se pueden copiar ni reutilizar con fines comerciales sin autorización.</p>
+
+  <h2>6. Enlaces a terceros</h2>
+  <p>El sitio enlaza a WhatsApp, Google (Maps y reseñas) y Waze. No controlamos esos servicios ni somos responsables de su contenido o sus políticas.</p>
+
+  <h2>7. Reseñas</h2>
+  <p>Las opiniones que se muestran provienen de reseñas públicas en Google. Cualquier persona puede dejar una reseña en nuestro perfil, sea positiva o no.</p>
+
+  <h2>8. Responsabilidad</h2>
+  <p>Hacemos lo posible por mantener el sitio disponible y correcto, pero no garantizamos que funcione sin interrupciones ni errores. Esto no limita los derechos que la ley le reconoce como consumidor.</p>
+
+  <h2>9. Garantía y datos personales</h2>
+  <p>Las condiciones de la garantía están en la <a href="/garantia/">política de garantía</a>. El tratamiento de datos personales está en la <a href="/privacidad/">política de tratamiento de datos</a>.</p>
+
+  <h2>10. Ley aplicable</h2>
+  <p>Estos términos se rigen por las leyes de la República de Colombia, incluida la Ley 1480 de 2011 (Estatuto del Consumidor). Para reclamaciones de consumo puede acudir a la Superintendencia de Industria y Comercio.</p>
+</Legal>

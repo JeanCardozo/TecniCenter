@@ -1,0 +1,217 @@
+---
+import Base from '../layouts/Base.astro';
+import Ticket from '../components/Ticket.astro';
+import Icon from '../components/Icon.astro';
+import { site, links, waDefault, reviews, brandLogos, brandWordmarks, faqs } from '../data/site';
+
+const title = 'Reparación de televisores y equipos de sonido en Ibagué | Tecni Center';
+const description = 'Servicio técnico autorizado de televisores Samsung, LG, JVC y más, y de equipos de sonido Bose y JBL en Ibagué. Diagnóstico garantizado, garantía en todos los trabajos y servicio a domicilio. Barrio 20 de Julio.';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ElectronicsStore',
+    name: site.name,
+    description,
+    url: Astro.site!.href,
+    telephone: site.tel,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${site.address.street}, ${site.address.area}`,
+      addressLocality: site.address.city,
+      addressRegion: site.address.region,
+      addressCountry: 'CO',
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+    hasMap: links.reviews,
+    openingHoursSpecification: site.hours
+      .filter((h) => h.days.length)
+      .map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes })),
+    founder: { '@type': 'Person', name: site.owner },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base title={title} description={description} schema={schema}>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="label">Servicio técnico autorizado · Ibagué</p>
+        <span class="bands" aria-hidden="true"></span>
+        <h1>Su televisor, con diagnóstico <em>honesto</em> y garantía.</h1>
+        <p class="lead">Reparamos televisores y equipos de sonido. Lo atiende directamente el dueño, {site.owner}.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href={waDefault} target="_blank" rel="noopener" data-track="whatsapp_hero"><Icon name="wa" /> Escribir por WhatsApp</a>
+          <a class="btn btn-call" href={`tel:${site.tel}`} data-track="call_hero"><Icon name="phone" /> Llamar {site.telDisplay}</a>
+        </div>
+        <ul class="proof">
+          <li>Garantía en todos los trabajos</li>
+          <li>Diagnóstico garantizado</li>
+          <li>Servicio a domicilio</li>
+          <li><a href="#opiniones">★ {site.rating.value} · {site.rating.count} reseñas en Google</a></li>
+        </ul>
+      </div>
+      <Ticket />
+    </div>
+  </section>
+
+  <section class="brands" aria-labelledby="marcas-t">
+    <div class="wrap">
+      <p class="label">Marcas</p>
+      <span class="bands" aria-hidden="true"></span>
+      <h2 id="marcas-t">Servicio técnico autorizado de las marcas que usted ya tiene en casa.</h2>
+      <p class="sub">Atendemos televisores y equipos de sonido de Samsung, LG, JVC, Bose, JBL y de las demás marcas reconocidas, incluidas las marcas chinas.</p>
+      <ul class="logos">
+        {brandLogos.map((l) => (
+          <li class={l.name === 'jbl' || l.name === 'lg' || l.name === 'xiaomi' ? 'tall' : ''}>
+            <svg viewBox={l.viewBox} role="img" aria-label={l.name.toUpperCase()}><path d={l.path} /></svg>
+          </li>
+        ))}
+        {brandWordmarks.map((w) => <li class="word">{w}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="reviews" id="opiniones" aria-labelledby="op-t">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="label">Opiniones en Google</p>
+          <span class="bands" aria-hidden="true"></span>
+          <h2 id="op-t">Lo que dicen quienes ya trajeron su equipo.</h2>
+        </div>
+        <p class="score">★ {site.rating.value}<small>{site.rating.count} reseñas en Google</small></p>
+      </div>
+      <ul class="quotes">
+        {reviews.map((r) => (
+          <li>
+            <blockquote>
+              <p>“{r.text}”</p>
+              <footer>{r.who} · Reseña en Google</footer>
+            </blockquote>
+          </li>
+        ))}
+      </ul>
+      <div class="review-actions">
+        <a class="btn btn-ghost" href={links.review} target="_blank" rel="noopener" data-track="review_write">Dejar mi reseña en Google</a>
+        <a href={links.reviews} target="_blank" rel="noopener" data-track="review_read">Ver las {site.rating.count} reseñas</a>
+        <span>¿Ya lo atendimos? Su opinión ayuda a otras personas a decidir.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="how dark" aria-labelledby="como-t">
+    <div class="wrap">
+      <p class="label">Cómo trabajamos</p>
+      <span class="bands" aria-hidden="true"></span>
+      <h2 id="como-t">Tres pasos, sin sorpresas.</h2>
+      <ol class="steps">
+        <li><h3>Escríbanos o llámenos</h3><p>Cuéntenos la marca y la falla. Si puede, envíe una foto o un video del equipo.</p></li>
+        <li><h3>Diagnóstico garantizado</h3><p>Revisamos el equipo y le explicamos qué falla tiene y qué se puede hacer.</p></li>
+        <li><h3>Reparación con garantía</h3><p>Todos los trabajos incluyen garantía. Si prefiere, vamos a su casa: el servicio a domicilio tiene costo.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="services" id="servicios" aria-labelledby="serv-t">
+    <div class="wrap">
+      <p class="label">Servicios</p>
+      <span class="bands" aria-hidden="true"></span>
+      <h2 id="serv-t">Qué reparamos y qué vendemos.</h2>
+      <ul class="service-list">
+        <li><h3>Televisores</h3><p>LED, LCD y Smart TV de todas las marcas: no enciende, no hay imagen, pantalla con líneas, sin sonido, fallas de WiFi y de aplicaciones.</p></li>
+        <li><h3>Equipos de sonido</h3><p>Reparación de equipos de sonido y parlantes de Bose, JBL, JVC y otras marcas.</p></li>
+        <li><h3>Baterías</h3><p>Gran variedad de baterías: telefónicas, auditivas, alcalinas y más.</p></li>
+        <li><h3>Servicio a domicilio</h3><p>Vamos a su casa. Tiene un costo adicional que le confirmamos antes de ir.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="about dark" aria-labelledby="dueno-t">
+    <div class="wrap">
+      <div>
+        <p class="label">Quién lo atiende</p>
+        <span class="bands" aria-hidden="true"></span>
+        <h2 id="dueno-t">Un taller atendido por su dueño.</h2>
+      </div>
+      <div>
+        <p>Tecni Center es de {site.owner}, y es él quien revisa y repara cada equipo. Cuando usted escribe o llama, habla con la persona que va a trabajar en su televisor.</p>
+        <p>Por eso las reseñas repiten las mismas palabras: honestidad, garantía y buen servicio.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href={waDefault} target="_blank" rel="noopener" data-track="whatsapp_about"><Icon name="wa" /> Hablar con {site.owner.split(' ')[0]}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="where" id="ubicacion" aria-labelledby="ub-t">
+    <div class="wrap">
+      <div>
+        <p class="label">Ubicación y horario</p>
+        <span class="bands" aria-hidden="true"></span>
+        <h2 id="ub-t">Visítenos en el barrio 20 de Julio.</h2>
+        <address>{site.address.street}<br />{site.address.area}, {site.address.city}, {site.address.region}</address>
+        <table class="hours">
+          <caption class="sr">Horario de atención</caption>
+          <tbody>
+            {site.hours.map((h) => <tr><th scope="row">{h.label}</th><td>{h.text}</td></tr>)}
+          </tbody>
+        </table>
+        <div class="cta-row">
+          <a class="btn btn-ghost" href={links.directions} target="_blank" rel="noopener" data-track="directions_google">Cómo llegar</a>
+          <a class="btn btn-ghost" href={links.waze} target="_blank" rel="noopener" data-track="directions_waze">Abrir en Waze</a>
+        </div>
+      </div>
+      <div class="map" id="map" data-src={links.embed}>
+        <button type="button" id="map-load">
+          Ver el mapa aquí
+          <small>Al cargarlo, Google puede guardar cookies en su navegador.</small>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="preguntas" aria-labelledby="faq-t">
+    <div class="wrap">
+      <p class="label">Preguntas frecuentes</p>
+      <span class="bands" aria-hidden="true"></span>
+      <h2 id="faq-t">Lo que más nos preguntan.</h2>
+      <div class="list">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="final dark" aria-labelledby="final-t">
+    <div class="wrap">
+      <h2 id="final-t">¿Su equipo no funciona?<br />Cuéntenos qué le pasa.</h2>
+      <p>Respondemos por WhatsApp y por teléfono en el horario de atención.</p>
+      <div class="cta-row">
+        <a class="btn btn-wa" href={waDefault} target="_blank" rel="noopener" data-track="whatsapp_final"><Icon name="wa" /> Escribir por WhatsApp</a>
+        <a class="btn btn-call" href={`tel:${site.tel}`} data-track="call_final"><Icon name="phone" /> Llamar {site.telDisplay}</a>
+      </div>
+      <p class="small">¿Ya lo atendimos? <a href={links.review} target="_blank" rel="noopener" data-track="review_final">Deje su reseña en Google</a>.</p>
+    </div>
+  </section>
+
+  <script>
+    const box = document.getElementById('map')!;
+    document.getElementById('map-load')!.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = box.dataset.src!;
+      f.title = 'Mapa de ubicación de Tecni Center';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      box.replaceChildren(f);
+    });
+  </script>
+</Base>
