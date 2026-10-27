@@ -1,0 +1,58 @@
+---
+---
+<div id="cookie-banner" role="region" aria-label="Cookies" hidden>
+  <p>
+    Usamos cookies propias necesarias y, solo si usted lo acepta, cookies de medición para mejorar el sitio.
+    <a href="/cookies/">Política de cookies</a>.
+  </p>
+  <div class="row">
+    <button type="button" class="btn btn-ghost" data-consent="denied">Solo necesarias</button>
+    <button type="button" class="btn btn-call" data-consent="granted">Aceptar medición</button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'tc-consent';
+  const GA = import.meta.env.PUBLIC_GA_ID as string | undefined;
+  const w = window as any;
+  const banner = document.getElementById('cookie-banner')!;
+
+  function loadAnalytics() {
+    if (!GA || w.gtag) return;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA}`;
+    document.head.append(s);
+    w.dataLayer = w.dataLayer || [];
+    w.gtag = function () { w.dataLayer.push(arguments); };
+    w.gtag('js', new Date());
+    w.gtag('config', GA, { anonymize_ip: true });
+  }
+
+  function saved() {
+    try { return localStorage.getItem(KEY); } catch { return null; }
+  }
+
+  function choose(value: string) {
+    try { localStorage.setItem(KEY, value); } catch { /* storage blocked: choice lasts for this page only */ }
+    banner.hidden = true;
+    if (value === 'granted') loadAnalytics();
+  }
+
+  const current = saved();
+  if (current === 'granted') loadAnalytics();
+  else if (!current) banner.hidden = false;
+
+  banner.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((b) =>
+    b.addEventListener('click', () => choose(b.dataset.consent!)),
+  );
+  document.querySelectorAll('[data-cookie-settings]').forEach((b) =>
+    b.addEventListener('click', () => { banner.hidden = false; }),
+  );
+
+  // Contact clicks are the conversion metric; sent only when analytics is allowed.
+  document.addEventListener('click', (e) => {
+    const el = (e.target as Element).closest<HTMLElement>('[data-track]');
+    if (el && w.gtag) w.gtag('event', 'contact_click', { method: el.dataset.track });
+  });
+</script>
