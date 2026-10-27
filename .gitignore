@@ -7,3 +7,11 @@ dist
 
 # Local Netlify folder
 .netlify
+
+# Local tooling and keys
+.atl/
+.claude/
+.codegraph/
+*.pem
+*.key
+.DS_Store

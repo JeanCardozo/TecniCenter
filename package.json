@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "deploy": "PUBLIC_GA_ID=G-53GDY0D0M3 SITE_URL=https://tecnicenter.netlify.app astro build && netlify deploy --prod --dir=dist"
+    "deploy": "PUBLIC_GA_ID=$(netlify env:get PUBLIC_GA_ID) astro build && netlify deploy --prod --dir=dist"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
